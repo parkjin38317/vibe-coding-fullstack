@@ -3,6 +3,7 @@ package com.example.vibeapp;
 import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
@@ -27,7 +28,9 @@ public class MemoryPostRepository implements PostRepository {
 
     @Override
     public List<Post> findAll() {
-        return new ArrayList<>(posts);
+        return posts.stream()
+                .sorted(Comparator.comparing(Post::getCreatedAt).reversed())
+                .toList();
     }
 
     @Override
