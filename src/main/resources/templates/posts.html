@@ -32,6 +32,37 @@
             margin: 0;
         }
 
+        .header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1000px;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
         .container {
             width: 100%;
             max-width: 1000px;
@@ -110,8 +141,9 @@
 </head>
 
 <body>
-    <div class="header">
+    <div class="header-actions">
         <h1>Board Posts</h1>
+        <a href="/posts/new" class="btn btn-primary">New Post</a>
     </div>
     <div class="container">
         <table>
