@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>VibeApp - Posts</title>
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            min-height: 100vh;
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            width: 100%;
+            max-width: 1000px;
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            background-color: rgba(15, 23, 42, 0.5);
+            color: #94a3b8;
+            font-weight: 600;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .post-no {
+            color: #64748b;
+            width: 80px;
+        }
+
+        .post-title {
+            font-weight: 500;
+        }
+
+        .post-date {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .post-views {
+            color: #38bdf8;
+            text-align: center;
+        }
+
+        .back-link {
+            margin-top: 2rem;
+            color: #818cf8;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #38bdf8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Board Posts</h1>
+    </div>
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="post-no">No</th>
+                    <th>Title</th>
+                    <th>Created At</th>
+                    <th class="post-views">Views</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="post : ${posts}">
+                    <td class="post-no" th:text="${post.no}">1</td>
+                    <td class="post-title" th:text="${post.title}">Post Title</td>
+                    <td class="post-date" th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">2024-02-23
+                    </td>
+                    <td class="post-views" th:text="${post.views}">0</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <a href="/" class="back-link">← Back to Home</a>
+</body>
+
+</html>

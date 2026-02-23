@@ -1,0 +1,40 @@
+package com.example.vibeapp;
+
+import org.springframework.stereotype.Repository;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
+
+@Repository
+public class MemoryPostRepository implements PostRepository {
+    private final List<Post> posts = new ArrayList<>();
+    private final AtomicLong sequence = new AtomicLong(1);
+
+    public MemoryPostRepository() {
+        for (int i = 1; i <= 10; i++) {
+            save(new Post(
+                null, 
+                "게시글 제목 " + i, 
+                "게시글 내용 " + i + " 입니다. 메모리 기반 저장소 테스트 진행 중입니다.", 
+                LocalDateTime.now().minusDays(10 - i), 
+                LocalDateTime.now().minusDays(10 - i), 
+                (int) (Math.random() * 100)
+            ));
+        }
+    }
+
+    @Override
+    public List<Post> findAll() {
+        return new ArrayList<>(posts);
+    }
+
+    @Override
+    public Post save(Post post) {
+        if (post.getNo() == null) {
+            post.setNo(sequence.getAndIncrement());
+        }
+        posts.add(post);
+        return post;
+    }
+}
