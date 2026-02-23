@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="ko">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Vibe Coding | 당신의 코드에 바이브를 더하세요</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2547f4",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#0a0a0e",
+                        "accent-purple": "#a855f7",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .neon-glow-blue {
+            box-shadow: 0 0 20px rgba(37, 71, 244, 0.3);
+        }
+
+        .neon-glow-purple {
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+        }
+
+        .hero-gradient {
+            background: radial-gradient(circle at 50% 50%, rgba(37, 71, 244, 0.15) 0%, transparent 70%);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #2547f4, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display selection:bg-primary/30 selection:text-primary">
+    <!-- Header / Navigation -->
+    <header class="fixed top-0 w-full z-50 px-6 py-4">
+        <nav class="max-w-7xl mx-auto flex items-center justify-between glass-card px-6 py-3 rounded-2xl">
+            <div class="flex items-center gap-2">
+                <div class="size-8 bg-primary rounded-lg flex items-center justify-center neon-glow-blue">
+                    <span class="material-symbols-outlined text-white text-xl">terminal</span>
+                </div>
+                <span class="text-xl font-bold tracking-tight">Vibe Coding</span>
+            </div>
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a class="hover:text-primary transition-colors" href="#services">Services</a>
+                <a class="hover:text-primary transition-colors" href="#projects">Showcase</a>
+                <a class="hover:text-primary transition-colors" href="#about">About</a>
+                <a class="hover:text-primary transition-colors" href="#community">Community</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <button
+                    class="bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-lg text-sm font-bold transition-all transform hover:scale-105 active:scale-95 neon-glow-blue">
+                    Join the Vibe
+                </button>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <!-- Hero Section -->
+        <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+            <!-- Background Decorative Elements -->
+            <div class="absolute top-1/4 -left-20 w-96 h-96 bg-primary/20 rounded-full blur-[120px]"></div>
+            <div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-accent-purple/20 rounded-full blur-[120px]"></div>
+            <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-widest mb-6">
+                    <span class="relative flex h-2 w-2">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                    </span>
+                    Now Live: v3.0 Early Access
+                </div>
+                <h1 class="text-6xl md:text-8xl font-bold tracking-tighter mb-6">
+                    Vibe <span class="text-gradient">Coding</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+                    당신의 코드에 <span class="text-slate-100 font-semibold">바이브</span>를 더하세요.<br />
+                    기술과 창의성이 만나는 프리미엄 개발자 커뮤니티.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <button
+                        class="w-full sm:w-auto px-8 py-4 bg-primary text-white font-bold rounded-xl text-lg hover:bg-primary/80 transition-all neon-glow-blue">
+                        Get Started
+                    </button>
+                    <button
+                        class="w-full sm:w-auto px-8 py-4 glass-card font-bold rounded-xl text-lg hover:bg-white/5 transition-all">
+                        View Projects
+                    </button>
+                </div>
+            </div>
+        </section>
+        <!-- Services Section -->
+        <section class="py-24 px-6 relative" id="services">
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-16">
+                    <h2 class="text-primary font-bold tracking-widest uppercase text-sm mb-2">Our Capabilities</h2>
+                    <h3 class="text-4xl md:text-5xl font-bold">Elevate Your Workflow</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Service 1 -->
+                    <div class="glass-card p-8 rounded-2xl group hover:border-primary/50 transition-all">
+                        <div
+                            class="size-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+                            <span class="material-symbols-outlined text-primary text-3xl">smart_toy</span>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">AI-Powered Development</h4>
+                        <p class="text-slate-400 leading-relaxed mb-6">인공지능을 활용한 스마트한 코드 분석과 자동화된 워크플로우로 개발 생산성을 극대화하세요.
+                        </p>
+                        <a class="text-primary font-bold inline-flex items-center gap-2 hover:gap-3 transition-all"
+                            href="#">
+                            Learn More <span class="material-symbols-outlined">arrow_forward</span>
+                        </a>
+                    </div>
+                    <!-- Service 2 -->
+                    <div class="glass-card p-8 rounded-2xl group hover:border-accent-purple/50 transition-all">
+                        <div
+                            class="size-14 bg-accent-purple/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-accent-purple/20 transition-colors">
+                            <span class="material-symbols-outlined text-accent-purple text-3xl">groups</span>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">Creative Community</h4>
+                        <p class="text-slate-400 leading-relaxed mb-6">코드와 표현력이 만나는 공간. 전 세계 개발자들과 소통하며 영감을 나누고 함께
+                            성장하세요.</p>
+                        <a class="text-accent-purple font-bold inline-flex items-center gap-2 hover:gap-3 transition-all"
+                            href="#">
+                            Learn More <span class="material-symbols-outlined">arrow_forward</span>
+                        </a>
+                    </div>
+                    <!-- Service 3 -->
+                    <div class="glass-card p-8 rounded-2xl group hover:border-primary/50 transition-all">
+                        <div
+                            class="size-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+                            <span class="material-symbols-outlined text-primary text-3xl">school</span>
+                        </div>
+                        <h4 class="text-xl font-bold mb-3">Expert Mentorship</h4>
+                        <p class="text-slate-400 leading-relaxed mb-6">최고의 기술 장인들로부터 직접 배우는 일대일 맞춤형 가이드를 통해 실력을
+                            업그레이드하세요.</p>
+                        <a class="text-primary font-bold inline-flex items-center gap-2 hover:gap-3 transition-all"
+                            href="#">
+                            Learn More <span class="material-symbols-outlined">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Project Showcase Section -->
+        <section class="py-24 px-6 bg-slate-950/30" id="projects">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+                    <div>
+                        <h2 class="text-accent-purple font-bold tracking-widest uppercase text-sm mb-2">Showcase</h2>
+                        <h3 class="text-4xl md:text-5xl font-bold">Latest Masterpieces</h3>
+                    </div>
+                    <button class="text-slate-400 hover:text-white transition-colors flex items-center gap-2">
+                        View Archive <span class="material-symbols-outlined">grid_view</span>
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Project 1 -->
+                    <div class="group relative overflow-hidden rounded-2xl aspect-[4/5] glass-card">
+                        <img alt="Neural Synth"
+                            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-100"
+                            data-alt="Abstract glowing 3D code network visualization"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOvxsR7PZ5KrFJ-PcqgsGcirPoqzw9MLg269c5XItWf96MjVUNtjVU-S4rjryzxI1ACecN2-VwcfC-aKh-YgHphICEYm26kzesDebyOjC5Il9jeQ--U2-azLdEFcVh6XmC9E0twxZV7Oj55FVtIs7AxQddGy-4XfrjRERbx-fF3aGlonmh898mW3bgrvl2URvtZr4c6RzIO66XICVIHnpS_Ja4Zis3lcqaIwtRWYhIWieapT9UiPBvRhOKGOXYpFfSpaKiw9fI1O8" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent">
+                        </div>
+                        <div class="absolute bottom-0 left-0 p-8 w-full">
+                            <span class="text-xs font-bold text-primary uppercase tracking-widest mb-2 block">AI /
+                                Audio</span>
+                            <h4 class="text-2xl font-bold mb-2">Neural Synth</h4>
+                            <p
+                                class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Generative audio synthesis using transformer models.</p>
+                        </div>
+                    </div>
+                    <!-- Project 2 -->
+                    <div class="group relative overflow-hidden rounded-2xl aspect-[4/5] glass-card">
+                        <img alt="Quantum CLI"
+                            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-100"
+                            data-alt="Cyberpunk style server room with blue neon lights"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1LDv0wdzuOiKLWISzjtGBuFPrleL3ozo7yVOR0NTkSadDR6glsBH_AGsW3hDEuhdCIxAKDtP1oZD1j7EajEgM-7THEQiluF70Yv4QlgZekyiQGfXcfJ4OyzQBUoFxgyyK65h9LwRITVSO036TcVVsXEiHutfjb-cffPtVZoSDHCi0jpfmQ7hkAMIKEJh2hWalenoFv1t3pE-0Wjb9GcdZOzkno1PxzZ5hzYNVCmTNcBZQGo1b0QNmdOcVqxgJQ1u8h9KU-09nl9o" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent">
+                        </div>
+                        <div class="absolute bottom-0 left-0 p-8 w-full">
+                            <span
+                                class="text-xs font-bold text-accent-purple uppercase tracking-widest mb-2 block">DevOps</span>
+                            <h4 class="text-2xl font-bold mb-2">Quantum CLI</h4>
+                            <p
+                                class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Next-gen terminal interface for hybrid cloud deployments.</p>
+                        </div>
+                    </div>
+                    <!-- Project 3 -->
+                    <div class="group relative overflow-hidden rounded-2xl aspect-[4/5] glass-card">
+                        <img alt="Aether UI"
+                            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-100"
+                            data-alt="Fluid neon abstract gradient background"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQ9vzgzwuWFdM0yQHEJF9Ku6QCtCM69KPUwqMxihBIW4CHvBiZX-oTCJZbtBtOcCxf4iLaqrA770glsHxQ2heBxKi9mzRO4nDil6GWSVB0LoNZKoBzbPeR7yjYk0jKT_4GM2-lXtSgq0yJdUQLentSHYInFLBPbcVvZGjx71SyzAkmEyxbmFxtihopJIuBYp3nEAu3Dkj_NhseFovcZ2BDV0pipDsUNvZaGYU74XLBb2D_Di_PFtfxHfgyAhC5XVZ7NAZ7TKvuFMI" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent">
+                        </div>
+                        <div class="absolute bottom-0 left-0 p-8 w-full">
+                            <span
+                                class="text-xs font-bold text-primary uppercase tracking-widest mb-2 block">UI/UX</span>
+                            <h4 class="text-2xl font-bold mb-2">Aether UI</h4>
+                            <p
+                                class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                Design system built for decentralized web applications.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- About Us / Philosophy Section -->
+        <section class="py-24 px-6 overflow-hidden" id="about">
+            <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
+                <div class="flex-1 space-y-8">
+                    <h2 class="text-primary font-bold tracking-widest uppercase text-sm">Our Philosophy</h2>
+                    <h3 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1]">Where Technology <br /><span
+                            class="text-gradient">Meets Creativity</span></h3>
+                    <p class="text-lg text-slate-400 leading-relaxed">
+                        우리는 코딩을 단순한 도구 이상으로 생각합니다. 코드는 하나의 예술 형태이며, 개발자는 세상을 만들어가는 아티스트입니다. 바이브코딩은 기술적 완벽함과 감성적인 표현이 만나는
+                        유니크한 생태계를 구축하고 있습니다.
+                    </p>
+                    <div class="grid grid-cols-2 gap-8 py-6">
+                        <div>
+                            <div class="text-3xl font-bold text-primary mb-1">12K+</div>
+                            <div class="text-sm text-slate-500 uppercase font-bold tracking-tighter">Developers</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-accent-purple mb-1">450+</div>
+                            <div class="text-sm text-slate-500 uppercase font-bold tracking-tighter">Projects Launched
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 relative">
+                    <div class="relative z-10 rounded-2xl overflow-hidden glass-card p-2 border-primary/20">
+                        <img alt="Coding workspace" class="w-full h-auto rounded-xl"
+                            data-alt="Professional developer workspace with dual monitors and code"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2YxjMeuWdJrfOyNRfcA-tlJvYNu2G3_Ew1knWJo8nUTvCJoUr4u1j_qfcll35Wq6vMVqPu9Y0Eeeb1jqt2jJ3IWorPp7TpBENDNbtrFSKuaL9yTOK6CiJIvdGHd0rEM1Wk7XxfURrkkIdABK2s-9wkIsTqneY2gbnjPdDbxgcUjNdkjOX9C0B-zKC7rAtIZdxH5joNfGslpp65XQvRxnSX1pYNUzzuLcPxM3v1Bw4w7FOladE96HH_kPXCGn4SXj7r7trjxcDe5U" />
+                    </div>
+                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-primary/20 rounded-full blur-3xl -z-0"></div>
+                    <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-accent-purple/20 rounded-full blur-3xl -z-0">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- CTA Section -->
+        <section class="py-24 px-6" id="community">
+            <div class="max-w-5xl mx-auto glass-card rounded-3xl p-12 md:p-20 text-center relative overflow-hidden">
+                <div
+                    class="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2">
+                </div>
+                <h3 class="text-4xl md:text-5xl font-bold mb-6 relative z-10">Ready to <span
+                        class="text-primary">Vibe?</span></h3>
+                <p class="text-lg text-slate-400 mb-10 max-w-xl mx-auto relative z-10">
+                    지금 가입하여 프리미엄 개발자 네트워크의 일원이 되세요. 독점적인 리소스와 강력한 커뮤니티가 당신을 기다립니다.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 relative z-10">
+                    <button
+                        class="w-full sm:w-auto px-10 py-4 bg-primary text-white font-bold rounded-xl text-lg hover:bg-primary/80 transition-all neon-glow-blue">
+                        Join the Vibe
+                    </button>
+                    <button
+                        class="w-full sm:w-auto px-10 py-4 bg-transparent border-2 border-slate-700 hover:border-slate-500 font-bold rounded-xl text-lg transition-all">
+                        Contact Us
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer class="py-12 px-6 border-t border-slate-900 bg-background-dark">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="flex items-center gap-2">
+                <div class="size-6 bg-primary rounded flex items-center justify-center">
+                    <span class="material-symbols-outlined text-white text-sm">terminal</span>
+                </div>
+                <span class="text-lg font-bold tracking-tight">Vibe Coding</span>
+            </div>
+            <div class="flex gap-8 text-sm text-slate-500">
+                <a class="hover:text-white transition-colors" href="#">Privacy Policy</a>
+                <a class="hover:text-white transition-colors" href="#">Terms of Service</a>
+                <a class="hover:text-white transition-colors" href="#">Discord</a>
+                <a class="hover:text-white transition-colors" href="#">Github</a>
+            </div>
+            <div class="text-sm text-slate-600">
+                © 2024 Vibe Coding Inc. All rights reserved.
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
