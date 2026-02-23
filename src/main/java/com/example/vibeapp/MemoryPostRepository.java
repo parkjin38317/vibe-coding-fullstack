@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
@@ -27,6 +28,13 @@ public class MemoryPostRepository implements PostRepository {
     @Override
     public List<Post> findAll() {
         return new ArrayList<>(posts);
+    }
+
+    @Override
+    public Optional<Post> findByNo(Long no) {
+        return posts.stream()
+                .filter(post -> post.getNo().equals(no))
+                .findFirst();
     }
 
     @Override

@@ -75,8 +75,14 @@
             width: 80px;
         }
 
-        .post-title {
-            font-weight: 500;
+        .post-title a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .post-title a:hover {
+            color: #38bdf8;
         }
 
         .post-date {
@@ -120,7 +126,9 @@
             <tbody>
                 <tr th:each="post : ${posts}">
                     <td class="post-no" th:text="${post.no}">1</td>
-                    <td class="post-title" th:text="${post.title}">Post Title</td>
+                    <td class="post-title">
+                        <a th:href="@{/posts/{no}(no=${post.no})}" th:text="${post.title}">Post Title</a>
+                    </td>
                     <td class="post-date" th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">2024-02-23
                     </td>
                     <td class="post-views" th:text="${post.views}">0</td>
