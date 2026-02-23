@@ -1,6 +1,10 @@
 package com.example.vibeapp;
 
+import com.example.vibeapp.Post;
+import com.example.vibeapp.PostRepository;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -13,6 +17,16 @@ public class PostService {
 
     public List<Post> getAllPosts() {
         return postRepository.findAll();
+    }
+
+    public void addPost(String title, String content) {
+        Post post = new Post();
+        post.setTitle(title);
+        post.setContent(content);
+        post.setCreatedAt(LocalDateTime.now());
+        post.setUpdatedAt(null);
+        post.setViews(0);
+        postRepository.save(post);
     }
 
     public Post getPostByNo(Long no) {
