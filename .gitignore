@@ -50,3 +50,6 @@ Desktop.ini
 /data/
 *.mv.db
 *.trace.db
+
+### logs ###
+/logs/
