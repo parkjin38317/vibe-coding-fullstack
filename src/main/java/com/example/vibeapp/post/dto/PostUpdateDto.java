@@ -7,10 +7,10 @@ import java.time.LocalDateTime;
 
 public record PostUpdateDto(
         @NotBlank(message = "제목은 필수입니다.") @Size(max = 100, message = "제목은 100자 이하로 입력해주세요.") String title,
-
-        String content) {
+        String content,
+        String tags) {
     public PostUpdateDto() {
-        this(null, null);
+        this(null, null, null);
     }
 
     public Post toEntity() {

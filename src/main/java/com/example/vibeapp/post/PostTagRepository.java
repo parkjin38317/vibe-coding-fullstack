@@ -7,4 +7,8 @@ public interface PostTagRepository {
     void save(PostTag postTag);
 
     void deleteById(Long id);
+
+    java.util.List<PostTag> findByPostNo(Long postNo);
+
+    void deleteByPostNo(Long postNo);
 }

@@ -165,6 +165,11 @@
                 <div class="error-message" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Content Error
                 </div>
             </div>
+            <div class="form-group">
+                <label for="tags">Tags (separated by commas)</label>
+                <input type="text" th:field="*{tags}" id="tags" class="form-control"
+                    placeholder="e.g. Spring, Java, Web">
+            </div>
 
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">Save</button>

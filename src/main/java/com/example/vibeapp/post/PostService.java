@@ -11,9 +11,11 @@ import java.util.List;
 @Service
 public class PostService {
     private final PostRepository postRepository;
+    private final PostTagRepository postTagRepository;
 
-    public PostService(PostRepository postRepository) {
+    public PostService(PostRepository postRepository, PostTagRepository postTagRepository) {
         this.postRepository = postRepository;
+        this.postTagRepository = postTagRepository;
     }
 
     public List<PostListDto> getPostsByPage(int page, int size) {
@@ -31,6 +33,8 @@ public class PostService {
     public void addPost(PostCreateDto dto) {
         Post post = dto.toEntity();
         postRepository.save(post);
+
+        saveTags(post.getNo(), dto.tags());
     }
 
     public PostResponseDTO getPostByNo(Long no) {
@@ -41,7 +45,11 @@ public class PostService {
         Post post = postRepository.findByNo(no)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid post number: " + no));
 
-        return PostResponseDTO.from(post);
+        // 태그 정보 조회
+        List<PostTag> tags = postTagRepository.findByPostNo(no);
+        String tagsString = String.join(", ", tags.stream().map(PostTag::getTagName).toList());
+
+        return PostResponseDTO.from(post, tagsString);
     }
 
     public void updatePost(Long no, PostUpdateDto dto) {
@@ -54,6 +62,24 @@ public class PostService {
         existingPost.setUpdatedAt(updatedPost.getUpdatedAt());
 
         postRepository.save(existingPost);
+
+        // 기존 태그 삭제 후 재등록
+        postTagRepository.deleteByPostNo(no);
+        saveTags(no, dto.tags());
+    }
+
+    private void saveTags(Long postNo, String tagsString) {
+        if (tagsString == null || tagsString.isBlank()) {
+            return;
+        }
+
+        String[] tags = tagsString.split(",");
+        for (String tag : tags) {
+            String trimmedTag = tag.trim();
+            if (!trimmedTag.isEmpty()) {
+                postTagRepository.save(new PostTag(null, postNo, trimmedTag));
+            }
+        }
     }
 
     public void deletePost(Long no) {
