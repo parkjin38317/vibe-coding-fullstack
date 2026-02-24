@@ -118,12 +118,39 @@
         .btn-primary:hover {
             opacity: 0.9;
         }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tag-badge {
+            background: rgba(56, 189, 248, 0.1);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .tag-badge:hover {
+            background: rgba(56, 189, 248, 0.2);
+            border-color: #38bdf8;
+        }
     </style>
 </head>
 
 <body>
     <div class="header">
         <h1 th:text="${post.title}">Post Title</h1>
+        <div class="tag-list" th:if="${post.tags != null and !post.tags.isEmpty()}">
+            <span class="tag-badge" th:each="tag : ${#strings.setSplit(post.tags, ', ')}"
+                th:text="${tag.trim()}">Tag</span>
+        </div>
     </div>
 
     <div class="container">
