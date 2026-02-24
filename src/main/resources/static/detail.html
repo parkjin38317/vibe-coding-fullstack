@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>VibeApp - Post Detail</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .detail-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .detail-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .detail-content {
+            line-height: 1.8;
+            color: #cbd5e1;
+            white-space: pre-wrap;
+            margin-bottom: 2rem;
+        }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>VibeApp</h1>
+        <a href="/index.html" class="btn btn-outline">Back to List</a>
+    </div>
+
+    <div class="container">
+        <div id="postDetail" class="detail-card">
+            <div id="loading" style="text-align: center; color: #94a3b8;">Loading post...</div>
+        </div>
+
+        <div class="actions">
+            <a id="editBtn" href="#" class="btn btn-primary" style="display: none;">Edit</a>
+            <button id="deleteBtn" class="btn btn-outline"
+                style="display: none; border-color: #ef4444; color: #ef4444;">Delete</button>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const postNo = urlParams.get('no');
+
+        async function loadPost() {
+            if (!postNo) {
+                alert('Invalid post number');
+                location.href = '/index.html';
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/posts/${postNo}`);
+                if (!response.ok) throw new Error('Post not found');
+                const post = await response.json();
+
+                renderPost(post);
+            } catch (err) {
+                document.getElementById('postDetail').innerHTML = `<p class="error-message">${err.message}</p>`;
+            }
+        }
+
+        function renderPost(post) {
+            const container = document.getElementById('postDetail');
+            container.innerHTML = `
+                <div class="detail-title">${post.title}</div>
+                <div class="post-meta" style="margin-bottom: 2rem;">
+                    <span>No. ${post.no}</span>
+                    <span>Views: ${post.views}</span>
+                    <span>Created: ${new Date(post.createdAt).toLocaleString()}</span>
+                    ${post.updatedAt ? `<span>Updated: ${new Date(post.updatedAt).toLocaleString()}</span>` : ''}
+                </div>
+                <div class="detail-content">${post.content}</div>
+                <div class="tag-list">
+                    ${post.tags ? post.tags.split(',').map(tag => `<span class="tag">${tag.trim()}</span>`).join('') : ''}
+                </div>
+            `;
+
+            const editBtn = document.getElementById('editBtn');
+            editBtn.href = `/form.html?no=${post.no}`;
+            editBtn.style.display = 'inline-flex';
+
+            const deleteBtn = document.getElementById('deleteBtn');
+            deleteBtn.style.display = 'inline-flex';
+            deleteBtn.onclick = async () => {
+                if (confirm('Are you sure you want to delete this post?')) {
+                    const res = await fetch(`/api/posts/${postNo}`, { method: 'DELETE' });
+                    if (res.ok) {
+                        alert('Deleted successfully');
+                        location.href = '/index.html';
+                    } else {
+                        alert('Failed to delete');
+                    }
+                }
+            };
+        }
+
+        loadPost();
+    </script>
+</body>
+
+</html>

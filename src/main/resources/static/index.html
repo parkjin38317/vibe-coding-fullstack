@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>VibeApp - Posts</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="header">
+        <h1>VibeApp</h1>
+        <a href="/form.html" class="btn btn-primary">New Post</a>
+    </div>
+
+    <div class="container" id="postList">
+        <!-- Posts will be loaded here -->
+    </div>
+
+    <div class="pagination" id="pagination">
+        <!-- Pagination will be loaded here -->
+    </div>
+
+    <script>
+        let currentPage = 1;
+        const pageSize = 5;
+
+        async function loadPosts(page = 1) {
+            currentPage = page;
+            const response = await fetch(`/api/posts?page=${page}&size=${pageSize}`);
+            const data = await response.json();
+
+            renderPosts(data.content);
+            renderPagination(data.totalPages, data.currentPage);
+        }
+
+        function renderPosts(posts) {
+            const container = document.getElementById('postList');
+            container.innerHTML = posts.length === 0 ? '<p style="text-align: center; color: #94a3b8;">No posts yet.</p>' : '';
+
+            posts.forEach(post => {
+                const card = document.createElement('a');
+                card.href = `/detail.html?no=${post.no}`;
+                card.className = 'post-card';
+                card.innerHTML = `
+                    <div class="post-title">${post.title}</div>
+                    <div class="post-meta">
+                        <span>No. ${post.no}</span>
+                        <span>Views: ${post.views}</span>
+                        <span>${new Date(post.createdAt).toLocaleDateString()}</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderPagination(totalPages, activePage) {
+            const container = document.getElementById('pagination');
+            container.innerHTML = '';
+
+            for (let i = 1; i <= totalPages; i++) {
+                const link = document.createElement('a');
+                link.href = '#';
+                link.className = `page-link ${i === activePage ? 'active' : ''}`;
+                link.innerText = i;
+                link.onclick = (e) => {
+                    e.preventDefault();
+                    loadPosts(i);
+                };
+                container.appendChild(link);
+            }
+        }
+
+        loadPosts();
+    </script>
+</body>
+
+</html>

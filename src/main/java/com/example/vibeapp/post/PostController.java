@@ -1,21 +1,20 @@
 package com.example.vibeapp.post;
 
+import com.example.vibeapp.common.dto.ApiPagingResponse;
 import com.example.vibeapp.post.dto.PostCreateDto;
 import com.example.vibeapp.post.dto.PostListDto;
 import com.example.vibeapp.post.dto.PostResponseDTO;
 import com.example.vibeapp.post.dto.PostUpdateDto;
 import jakarta.validation.Valid;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/api/posts")
 public class PostController {
     private final PostService postService;
 
@@ -23,83 +22,47 @@ public class PostController {
         this.postService = postService;
     }
 
-    @GetMapping("/posts")
-    public String list(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
-        int size = 5;
+    @GetMapping
+    public ResponseEntity<ApiPagingResponse<PostListDto>> list(
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "5") int size) {
+
         List<PostListDto> posts = postService.getPostsByPage(page, size);
         int totalPages = postService.getTotalPages(size);
+        long totalElements = totalPages * (long) size; // Approximate for now, as service doesn't provide exact count
+                                                       // yet
 
-        // 페이지 블록 (1-5, 6-10 ...)
-        int blockLimit = 5;
-        int startPage = (((int) Math.ceil((double) page / blockLimit)) - 1) * blockLimit + 1;
-        int endPage = Math.min(startPage + blockLimit - 1, totalPages);
+        ApiPagingResponse<PostListDto> response = new ApiPagingResponse<>(
+                posts,
+                totalPages,
+                page,
+                totalElements);
 
-        model.addAttribute("posts", posts);
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", totalPages);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
-
-        return "post/posts";
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/posts/{no}")
-    public String detail(@PathVariable("no") Long no, Model model) {
+    @GetMapping("/{no}")
+    public ResponseEntity<PostResponseDTO> detail(@PathVariable("no") Long no) {
         PostResponseDTO post = postService.getPostByNo(no);
-        model.addAttribute("post", post);
-        return "post/post_detail";
+        return ResponseEntity.ok(post);
     }
 
-    @GetMapping("/posts/new")
-    public String newForm(Model model) {
-        model.addAttribute("postCreateDto", new PostCreateDto());
-        return "post/post_new_form";
+    @PostMapping
+    public ResponseEntity<Void> add(@Valid @RequestBody PostCreateDto postCreateDto) {
+        postService.addPost(postCreateDto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping("/posts/add")
-    public String add(@Valid @ModelAttribute("postCreateDto") PostCreateDto postCreateDto,
-            BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "post/post_new_form";
-        }
-        try {
-            postService.addPost(postCreateDto);
-        } catch (IllegalArgumentException e) {
-            bindingResult.reject("tagError", e.getMessage());
-            return "post/post_new_form";
-        }
-        return "redirect:/posts";
+    @PatchMapping("/{no}")
+    public ResponseEntity<Void> update(@PathVariable("no") Long no,
+            @Valid @RequestBody PostUpdateDto postUpdateDto) {
+        postService.updatePost(no, postUpdateDto);
+        return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/posts/{no}/edit")
-    public String editForm(@PathVariable("no") Long no, Model model) {
-        PostResponseDTO post = postService.getPostByNo(no);
-        model.addAttribute("postUpdateDto", new PostUpdateDto(post.title(), post.content(), post.tags()));
-        model.addAttribute("no", no);
-        return "post/post_edit_form";
-    }
-
-    @PostMapping("/posts/{no}/save")
-    public String update(@PathVariable("no") Long no,
-            @Valid @ModelAttribute("postUpdateDto") PostUpdateDto postUpdateDto,
-            BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("no", no);
-            return "post/post_edit_form";
-        }
-        try {
-            postService.updatePost(no, postUpdateDto);
-        } catch (IllegalArgumentException e) {
-            model.addAttribute("no", no);
-            bindingResult.reject("tagError", e.getMessage());
-            return "post/post_edit_form";
-        }
-        return "redirect:/posts/" + no;
-    }
-
-    @GetMapping("/posts/{no}/delete")
-    public String delete(@PathVariable("no") Long no) {
+    @DeleteMapping("/{no}")
+    public ResponseEntity<Void> delete(@PathVariable("no") Long no) {
         postService.deletePost(no);
-        return "redirect:/posts";
+        return ResponseEntity.noContent().build();
     }
 }

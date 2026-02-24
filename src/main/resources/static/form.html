@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>VibeApp - Post Form</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .form-container {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1 id="formTitle">New Post</h1>
+    </div>
+
+    <div class="container">
+        <div class="form-container">
+            <div id="globalError" class="error-message" style="display: none; margin-bottom: 1.5rem;"></div>
+
+            <form id="postForm">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" class="form-control" placeholder="Enter title" required>
+                    <div id="error-title" class="error-message" style="display: none;"></div>
+                </div>
+                <div class="form-group">
+                    <label for="content">Content</label>
+                    <textarea id="content" class="form-control" placeholder="Enter content" required></textarea>
+                    <div id="error-content" class="error-message" style="display: none;"></div>
+                </div>
+                <div class="form-group">
+                    <label for="tags">Tags (separated by commas)</label>
+                    <input type="text" id="tags" class="form-control" placeholder="e.g. Spring, Java, Web">
+                    <div id="error-tags" class="error-message" style="display: none;"></div>
+                </div>
+                <div class="actions" style="margin-top: 2rem; gap: 1rem; display: flex;">
+                    <button type="submit" class="btn btn-primary" id="submitBtn">Register</button>
+                    <a href="/index.html" class="btn btn-outline">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const postNo = urlParams.get('no');
+        const isEdit = !!postNo;
+
+        if (isEdit) {
+            document.getElementById('formTitle').innerText = 'Edit Post';
+            document.getElementById('submitBtn').innerText = 'Save';
+            loadPostData();
+        }
+
+        async function loadPostData() {
+            const response = await fetch(`/api/posts/${postNo}`);
+            const post = await response.json();
+            document.getElementById('title').value = post.title;
+            document.getElementById('content').value = post.content;
+            document.getElementById('tags').value = post.tags || '';
+        }
+
+        document.getElementById('postForm').onsubmit = async (e) => {
+            e.preventDefault();
+
+            // Clear errors
+            document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+
+            const payload = {
+                title: document.getElementById('title').value,
+                content: document.getElementById('content').value,
+                tags: document.getElementById('tags').value
+            };
+
+            try {
+                const method = isEdit ? 'PATCH' : 'POST';
+                const url = isEdit ? `/api/posts/${postNo}` : '/api/posts';
+
+                const response = await fetch(url, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    alert(isEdit ? 'Updated successfully' : 'Registered successfully');
+                    location.href = isEdit ? `/detail.html?no=${postNo}` : '/index.html';
+                } else {
+                    const errData = await response.json();
+                    handleErrors(errData);
+                }
+            } catch (err) {
+                alert('Network error or server unavailable');
+            }
+        };
+
+        function handleErrors(errors) {
+            if (errors.error) {
+                const globalErr = document.getElementById('globalError');
+                globalErr.innerText = errors.error;
+                globalErr.style.display = 'block';
+            } else {
+                for (const [field, msg] of Object.entries(errors)) {
+                    const errEl = document.getElementById(`error-${field}`);
+                    if (errEl) {
+                        errEl.innerText = msg;
+                        errEl.style.display = 'block';
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
