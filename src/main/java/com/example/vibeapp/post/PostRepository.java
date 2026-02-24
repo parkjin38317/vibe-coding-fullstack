@@ -13,9 +13,11 @@ public interface PostRepository {
 
     Optional<Post> findByNo(Long no);
 
-    Post save(Post post);
+    void save(Post post);
 
     void deleteByNo(Long no);
+
+    void increaseViews(Long no);
 
     int count();
 }

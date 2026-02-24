@@ -34,11 +34,13 @@ public class PostService {
     }
 
     public PostResponseDTO getPostByNo(Long no) {
+        // DB에서 조회수 1 증가
+        postRepository.increaseViews(no);
+
+        // 증가된 데이터를 포함하여 조회
         Post post = postRepository.findByNo(no)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid post number: " + no));
 
-        // 상세 조회 시 조회수 증가
-        post.setViews(post.getViews() + 1);
         return PostResponseDTO.from(post);
     }
 

@@ -40,31 +40,29 @@ public class MemoryPostRepository implements PostRepository {
     }
 
     @Override
-    public Post save(Post post) {
+    public void save(Post post) {
         if (post.getNo() == null) {
             post.setNo(sequence.getAndIncrement());
             posts.add(post);
         } else {
-            // 기존 게시글 업데이트 시 위치 교체
-            int index = -1;
+            // Update existing post
             for (int i = 0; i < posts.size(); i++) {
                 if (posts.get(i).getNo().equals(post.getNo())) {
-                    index = i;
-                    break;
+                    posts.set(i, post);
+                    return;
                 }
             }
-            if (index != -1) {
-                posts.set(index, post);
-            } else {
-                posts.add(post);
-            }
         }
-        return post;
     }
 
     @Override
     public void deleteByNo(Long no) {
         posts.removeIf(post -> post.getNo().equals(no));
+    }
+
+    @Override
+    public void increaseViews(Long no) {
+        findByNo(no).ifPresent(post -> post.setViews(post.getViews() + 1));
     }
 
     @Override
