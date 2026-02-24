@@ -28,6 +28,7 @@
             background: linear-gradient(to right, #38bdf8, #818cf8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
             font-size: 2.5rem;
             margin: 0;
         }
@@ -118,7 +119,8 @@
     </div>
 
     <div class="footer-nav">
-        <a href="/posts" class="btn btn-outline">List</a>
+        <a href="/posts" class="btn btn-outline" style="margin-right: 1rem;">List</a>
+        <a th:href="@{/posts/{no}/edit(no=${post.no})}" class="btn btn-primary">Edit</a>
     </div>
 </body>
 
