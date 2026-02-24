@@ -125,6 +125,16 @@
             background: rgba(255, 255, 255, 0.05);
             border-color: rgba(255, 255, 255, 0.2);
         }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-top: 0.4rem;
+        }
+
+        .is-invalid {
+            border-color: #ef4444 !important;
+        }
     </style>
 </head>
 
@@ -134,45 +144,31 @@
     </div>
 
     <div class="container">
-        <form th:action="@{/posts/{no}/save(no=${post.no})}" method="post">
+        <form th:action="@{/posts/{no}/save(no=${no})}" th:object="${postUpdateDto}" method="post">
             <div class="form-group">
                 <label>No.</label>
-                <input type="text" class="form-control" th:value="${post.no}" readonly>
+                <input type="text" class="form-control" th:value="${no}" readonly>
             </div>
 
             <div class="form-group">
                 <label for="title">Title</label>
-                <input type="text" id="title" name="title" class="form-control" th:value="${post.title}"
-                    placeholder="Enter title">
+                <input type="text" th:field="*{title}" id="title" class="form-control"
+                    th:classappend="${#fields.hasErrors('title')} ? 'is-invalid' : ''" placeholder="Enter title">
+                <div class="error-message" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title Error</div>
             </div>
 
             <div class="form-group">
                 <label for="content">Content</label>
-                <textarea id="content" name="content" class="form-control" th:text="${post.content}"
+                <textarea th:field="*{content}" id="content" class="form-control"
+                    th:classappend="${#fields.hasErrors('content')} ? 'is-invalid' : ''"
                     placeholder="Enter content"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>Created At</label>
-                <input type="text" class="form-control" th:value="${#temporals.format(post.createdAt, 'yyyy-MM-dd')}"
-                    readonly>
-            </div>
-
-            <div class="form-group">
-                <label>Updated At</label>
-                <input type="text" class="form-control"
-                    th:value="${post.updatedAt != null ? #temporals.format(post.updatedAt, 'yyyy-MM-dd') : ''}"
-                    readonly>
-            </div>
-
-            <div class="form-group">
-                <label>Views</label>
-                <input type="text" class="form-control" th:value="${post.views}" readonly>
+                <div class="error-message" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Content Error
+                </div>
             </div>
 
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">Save</button>
-                <a th:href="@{/posts/{no}(no=${post.no})}" class="btn btn-outline">Cancel</a>
+                <a th:href="@{/posts/{no}(no=${no})}" class="btn btn-outline">Cancel</a>
             </div>
         </form>
     </div>

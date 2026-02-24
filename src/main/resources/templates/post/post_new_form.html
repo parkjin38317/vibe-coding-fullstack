@@ -114,6 +114,16 @@
             border-color: #f8fafc;
             color: #f8fafc;
         }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-top: 0.4rem;
+        }
+
+        .is-invalid {
+            border-color: #ef4444 !important;
+        }
     </style>
 </head>
 
@@ -123,19 +133,24 @@
     </div>
 
     <div class="container">
-        <form id="postForm" action="/posts/add" method="POST">
+        <form id="postForm" th:action="@{/posts/add}" th:object="${postCreateDto}" method="POST">
             <div class="form-group">
                 <label for="title">Title</label>
-                <input type="text" id="title" name="title" class="form-control" placeholder="Enter title" required>
+                <input type="text" th:field="*{title}" id="title" class="form-control"
+                    th:classappend="${#fields.hasErrors('title')} ? 'is-invalid' : ''" placeholder="Enter title">
+                <div class="error-message" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title Error</div>
             </div>
             <div class="form-group">
                 <label for="content">Content</label>
-                <textarea id="content" name="content" class="form-control" placeholder="Enter content"
-                    required></textarea>
+                <textarea th:field="*{content}" id="content" class="form-control"
+                    th:classappend="${#fields.hasErrors('content')} ? 'is-invalid' : ''"
+                    placeholder="Enter content"></textarea>
+                <div class="error-message" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Content Error
+                </div>
             </div>
             <div class="actions">
                 <button type="submit" class="btn btn-primary">Register</button>
-                <a href="/posts" class="btn btn-outline">Cancel</a>
+                <a th:href="@{/posts}" class="btn btn-outline">Cancel</a>
             </div>
         </form>
     </div>
