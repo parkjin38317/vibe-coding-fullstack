@@ -17,11 +17,8 @@ public class PostService {
     }
 
     public List<PostListDto> getPostsByPage(int page, int size) {
-        List<Post> allPosts = postRepository.findAll();
-        int start = (page - 1) * size;
-        return allPosts.stream()
-                .skip(start)
-                .limit(size)
+        int offset = (page - 1) * size;
+        return postRepository.findByPage(offset, size).stream()
                 .map(PostListDto::from)
                 .toList();
     }

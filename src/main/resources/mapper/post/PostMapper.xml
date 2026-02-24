@@ -6,25 +6,31 @@
 <mapper namespace="com.example.vibeapp.post.PostRepository">
 
     <select id="findAll" resultType="Post">
-        SELECT * FROM posts ORDER BY created_at DESC
+        SELECT * FROM POSTS ORDER BY NO DESC
+    </select>
+
+    <select id="findByPage" resultType="Post">
+        SELECT * FROM POSTS 
+        ORDER BY NO DESC
+        LIMIT #{limit} OFFSET #{offset}
     </select>
 
     <select id="findByNo" resultType="Post">
-        SELECT * FROM posts WHERE no = #{no}
+        SELECT * FROM POSTS WHERE NO = #{no}
     </select>
 
     <insert id="save" useGeneratedKeys="true" keyProperty="no">
-        MERGE INTO posts (no, title, content, views, created_at, updated_at)
-        KEY (no)
+        MERGE INTO POSTS (NO, TITLE, CONTENT, VIEWS, CREATED_AT, UPDATED_AT)
+        KEY (NO)
         VALUES (#{no}, #{title}, #{content}, #{views}, #{createdAt}, #{updatedAt})
     </insert>
 
     <delete id="deleteByNo">
-        DELETE FROM posts WHERE no = #{no}
+        DELETE FROM POSTS WHERE NO = #{no}
     </delete>
 
     <select id="count" resultType="int">
-        SELECT COUNT(*) FROM posts
+        SELECT COUNT(*) FROM POSTS
     </select>
 
 </mapper>

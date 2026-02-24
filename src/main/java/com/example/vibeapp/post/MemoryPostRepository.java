@@ -71,4 +71,13 @@ public class MemoryPostRepository implements PostRepository {
     public int count() {
         return posts.size();
     }
+
+    @Override
+    public List<Post> findByPage(int offset, int limit) {
+        return posts.stream()
+                .sorted(Comparator.comparing(Post::getCreatedAt).reversed())
+                .skip(offset)
+                .limit(limit)
+                .toList();
+    }
 }
