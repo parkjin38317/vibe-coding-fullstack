@@ -12,4 +12,6 @@ public interface PostRepository {
     Post save(Post post);
 
     void deleteByNo(Long no);
+
+    int count();
 }

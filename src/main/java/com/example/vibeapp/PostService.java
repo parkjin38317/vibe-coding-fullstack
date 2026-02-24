@@ -19,6 +19,20 @@ public class PostService {
         return postRepository.findAll();
     }
 
+    public List<Post> getPostsByPage(int page, int size) {
+        List<Post> allPosts = postRepository.findAll();
+        int start = (page - 1) * size;
+        return allPosts.stream()
+                .skip(start)
+                .limit(size)
+                .toList();
+    }
+
+    public int getTotalPages(int size) {
+        int totalPosts = postRepository.count();
+        return (int) Math.ceil((double) totalPosts / size);
+    }
+
     public void addPost(String title, String content) {
         Post post = new Post();
         post.setTitle(title);

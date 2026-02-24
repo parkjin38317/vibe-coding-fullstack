@@ -17,9 +17,22 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    public String list(Model model) {
-        List<Post> posts = postService.getAllPosts();
+    public String list(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+        int size = 5;
+        List<Post> posts = postService.getPostsByPage(page, size);
+        int totalPages = postService.getTotalPages(size);
+
+        // 페이지 블록 (1-5, 6-10 ...)
+        int blockLimit = 5;
+        int startPage = (((int) Math.ceil((double) page / blockLimit)) - 1) * blockLimit + 1;
+        int endPage = Math.min(startPage + blockLimit - 1, totalPages);
+
         model.addAttribute("posts", posts);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
         return "posts";
     }
 
