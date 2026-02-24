@@ -95,6 +95,29 @@
             color: #38bdf8;
             border-color: #38bdf8;
         }
+
+        .btn-danger {
+            background-color: rgba(239, 68, 68, 0.1);
+            border: 1px solid #ef4444;
+            color: #ef4444;
+            margin-left: 1rem;
+        }
+
+        .btn-danger:hover {
+            background-color: #ef4444;
+            color: white;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            color: white;
+            border: none;
+            margin-left: 1rem;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
     </style>
 </head>
 
@@ -119,8 +142,10 @@
     </div>
 
     <div class="footer-nav">
-        <a href="/posts" class="btn btn-outline" style="margin-right: 1rem;">List</a>
+        <a href="/posts" class="btn btn-outline">List</a>
         <a th:href="@{/posts/{no}/edit(no=${post.no})}" class="btn btn-primary">Edit</a>
+        <a th:href="@{/posts/{no}/delete(no=${post.no})}" class="btn btn-danger"
+            onclick="return confirm('정말 삭제하시겠습니까?')">Delete</a>
     </div>
 </body>
 

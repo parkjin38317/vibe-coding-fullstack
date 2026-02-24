@@ -61,4 +61,9 @@ public class MemoryPostRepository implements PostRepository {
         }
         return post;
     }
+
+    @Override
+    public void deleteByNo(Long no) {
+        posts.removeIf(post -> post.getNo().equals(no));
+    }
 }
