@@ -13,7 +13,7 @@ public class PostTag {
     @Column(name = "POST_NO", nullable = false)
     private Long postNo;
 
-    @Column(name = "TAG_NAME", nullable = false, length = 50)
+    @Column(name = "TAG_NAME", nullable = false, length = 100)
     private String tagName;
 
     public PostTag() {

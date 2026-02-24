@@ -84,6 +84,9 @@ public class PostService {
         for (String tag : tags) {
             String trimmedTag = tag.trim();
             if (!trimmedTag.isEmpty()) {
+                if (trimmedTag.length() > 100) {
+                    throw new IllegalArgumentException("태그는 100자 이하로 입력해주세요: " + trimmedTag);
+                }
                 postTagRepository.save(new PostTag(null, postNo, trimmedTag));
             }
         }

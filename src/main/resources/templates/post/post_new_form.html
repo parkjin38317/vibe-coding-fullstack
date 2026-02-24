@@ -134,6 +134,10 @@
 
     <div class="container">
         <form id="postForm" th:action="@{/posts/add}" th:object="${postCreateDto}" method="POST">
+            <div class="error-message" th:if="${#fields.hasErrors('global')}"
+                style="margin-bottom: 1rem; padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 0.5rem; border: 1px solid rgba(239, 68, 68, 0.2);">
+                <p th:each="err : ${#fields.errors('global')}" th:text="${err}">Global Error</p>
+            </div>
             <div class="form-group">
                 <label for="title">Title</label>
                 <input type="text" th:field="*{title}" id="title" class="form-control"
