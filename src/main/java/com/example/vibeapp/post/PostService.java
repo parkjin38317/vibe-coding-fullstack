@@ -5,6 +5,7 @@ import com.example.vibeapp.post.dto.PostListDto;
 import com.example.vibeapp.post.dto.PostResponseDTO;
 import com.example.vibeapp.post.dto.PostUpdateDto;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class PostService {
         return (int) Math.ceil((double) totalPosts / size);
     }
 
+    @Transactional
     public void addPost(PostCreateDto dto) {
         Post post = dto.toEntity();
         postRepository.save(post);
@@ -52,6 +54,7 @@ public class PostService {
         return PostResponseDTO.from(post, tagsString);
     }
 
+    @Transactional
     public void updatePost(Long no, PostUpdateDto dto) {
         Post existingPost = postRepository.findByNo(no)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid post number: " + no));
