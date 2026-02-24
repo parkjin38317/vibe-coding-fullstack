@@ -69,7 +69,7 @@ public class PostController {
     @GetMapping("/posts/{no}/edit")
     public String editForm(@PathVariable("no") Long no, Model model) {
         PostResponseDTO post = postService.getPostByNo(no);
-        model.addAttribute("postUpdateDto", new PostUpdateDto(post.getTitle(), post.getContent()));
+        model.addAttribute("postUpdateDto", new PostUpdateDto(post.title(), post.content()));
         model.addAttribute("no", no);
         return "post/post_edit_form";
     }
