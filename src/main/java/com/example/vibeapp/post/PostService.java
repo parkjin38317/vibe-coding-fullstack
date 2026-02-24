@@ -39,6 +39,7 @@ public class PostService {
         saveTags(post.getNo(), dto.tags());
     }
 
+    @Transactional
     public PostResponseDTO getPostByNo(Long no) {
         // DB에서 조회수 1 증가
         postRepository.increaseViews(no);
@@ -64,6 +65,9 @@ public class PostService {
         existingPost.setContent(updatedPost.getContent());
         existingPost.setUpdatedAt(updatedPost.getUpdatedAt());
 
+        // 영속 상태인 existingPost의 값을 변경했으므로,
+        // 트랜잭션 종료 시점에 Dirty Checking(변경 감지)에 의해 UPDATE 쿼리가 실행됨
+        // (save 호출이 없어도 반영되지만, 명시적으로 호출해도 무방함)
         postRepository.save(existingPost);
 
         // 기존 태그 삭제 후 재등록
@@ -85,6 +89,7 @@ public class PostService {
         }
     }
 
+    @Transactional
     public void deletePost(Long no) {
         postRepository.deleteByNo(no);
     }
