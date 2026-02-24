@@ -32,9 +32,20 @@ public class PostService {
     public Post getPostByNo(Long no) {
         Post post = postRepository.findByNo(no)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid post number: " + no));
-        
+
         // 상세 조회 시 조회수 증가
         post.setViews(post.getViews() + 1);
         return post;
+    }
+
+    public void updatePost(Long no, String title, String content) {
+        Post post = postRepository.findByNo(no)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid post number: " + no));
+
+        post.setTitle(title);
+        post.setContent(content);
+        post.setUpdatedAt(LocalDateTime.now());
+
+        postRepository.save(post);
     }
 }

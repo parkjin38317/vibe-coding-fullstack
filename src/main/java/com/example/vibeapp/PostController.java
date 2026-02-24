@@ -47,4 +47,11 @@ public class PostController {
         model.addAttribute("post", post);
         return "post_edit_form";
     }
+
+    @PostMapping("/posts/{no}/save")
+    public String update(@PathVariable("no") Long no, @RequestParam("title") String title,
+            @RequestParam("content") String content) {
+        postService.updatePost(no, title, content);
+        return "redirect:/posts/" + no;
+    }
 }
