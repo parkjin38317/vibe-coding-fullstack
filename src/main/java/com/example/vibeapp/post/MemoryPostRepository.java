@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
-@Repository
+// @Repository
 public class MemoryPostRepository implements PostRepository {
     private final List<Post> posts = new ArrayList<>();
     private final AtomicLong sequence = new AtomicLong(1);

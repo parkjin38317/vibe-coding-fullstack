@@ -45,3 +45,8 @@ out/
 ### Windows ###
 Thumbs.db
 Desktop.ini
+
+### H2 Database ###
+/data/
+*.mv.db
+*.trace.db
