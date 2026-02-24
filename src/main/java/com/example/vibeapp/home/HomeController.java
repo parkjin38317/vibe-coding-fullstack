@@ -10,6 +10,6 @@ public class HomeController {
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("message", "Welcome to VibeApp with Thymeleaf!");
-        return "index";
+        return "home/home";
     }
 }

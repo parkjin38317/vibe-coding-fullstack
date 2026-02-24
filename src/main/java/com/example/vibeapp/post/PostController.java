@@ -33,19 +33,19 @@ public class PostController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
 
-        return "posts";
+        return "post/posts";
     }
 
     @GetMapping("/posts/{no}")
     public String detail(@PathVariable("no") Long no, Model model) {
         Post post = postService.getPostByNo(no);
         model.addAttribute("post", post);
-        return "post_detail";
+        return "post/post_detail";
     }
 
     @GetMapping("/posts/new")
     public String newForm() {
-        return "post_new_form";
+        return "post/post_new_form";
     }
 
     @PostMapping("/posts/add")
@@ -58,7 +58,7 @@ public class PostController {
     public String editForm(@PathVariable("no") Long no, Model model) {
         Post post = postService.getPostByNo(no);
         model.addAttribute("post", post);
-        return "post_edit_form";
+        return "post/post_edit_form";
     }
 
     @PostMapping("/posts/{no}/save")
